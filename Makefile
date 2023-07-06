@@ -3,32 +3,34 @@
 
 CC = gcc
 LD = gcc
-CFLAGS = -Wall -I$(HEDDIR) -fcx-limited-range -g
-LFLAGS = -Wl,-rpath='$(LIBDIR)' $(CFLAGS)
+CFLAGS = -Wall -I$(HEDDIR) -fPIC
+LFLAGS = -shared -Wl,-soname,$(EXEC) $(CFLAGS)
 
-SRCDIR = .
-HEDDIR = ..
-LIBDIR = ..
+HEDDIR = .
+ASMDIR = .
 OBJDIR = ./obj
 
-EXEC = demo
+EXEC = libfft_asm.so
 
-LIBS = -lm -lfft_asm
+LIBS = -lm -lc
 
 _DEPS = fft_asm.h
 DEPS = $(patsubst %,$(HEDDIR)/%,$(_DEPS))
 
-_OBJ =  demo.o
+_OBJ = fft.o
 OBJ = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
 $(EXEC): $(OBJ)
-	$(LD) -o $@ $(OBJ) -L $(LIBDIR) $(LIBS) $(LFLAGS)
+	$(LD) -o $@ $(OBJ) $(LIBS) $(LFLAGS)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(DEPS) | $(OBJDIR)
+$(OBJDIR)/%.o: $(ASMDIR)/%.s $(DEPS) | $(OBJDIR)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(OBJDIR):
 	mkdir -p $@
+
+demo: $(EXEC)
+	$(MAKE) -C demo
 
 .PHONY: clean
 
