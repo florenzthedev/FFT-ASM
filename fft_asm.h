@@ -9,7 +9,7 @@
 void fft_asm(double complex *X, long N);
 
 void fft(double complex *X, long N) {
-  assert(N & (N - 1) == 0);
+  assert((N & (N - 1)) == 0);
   fft_asm(X, N);
 }
 
