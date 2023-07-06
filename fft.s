@@ -78,14 +78,13 @@ pair_loop:
   addq    %r12,           %r15
   movupd  (%rdi,%r15,8),  %xmm2
 
-  # Multiply odd element by omega
+  # odd * omega
   movapd  %xmm2,        %xmm3
   movlhps %xmm2,        %xmm2
   movhlps %xmm3,        %xmm3
   mulpd   %xmm0,        %xmm2
   mulpd   %xmm0,        %xmm3
-  shufpd  $0x1,         %xmm3,  %xmm3
-  
+  shufpd  $0x1,         %xmm3,  %xmm3 
   xorpd   NEGAPD(%rip), %xmm3
   addpd   %xmm3,        %xmm2
 
