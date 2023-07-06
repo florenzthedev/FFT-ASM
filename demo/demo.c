@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 
   FILE *fp = fopen(argv[1], "r");
   if (fp == NULL) {
-    printf("Error opening file.");
+    printf("Error opening file.\n");
     return EXIT_FAILURE;
   }
 
