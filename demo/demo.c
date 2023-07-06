@@ -1,10 +1,17 @@
+// Copyright (c) 2023 Zachary Todd Edwards
+// MIT License
+
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
+
 #include "fft_asm.h"
 
 #define MAX_SAMPLES 127
 
+// the bit length and bit reversal functions could be improved with their own
+// assembly optimizations, the prototypes are intended to be compatible with gcc
+// and clang's intrinsic functions for the same tasks
 unsigned int bit_length(unsigned int x) {
   unsigned int bits = 0;
   while (x) {
@@ -39,14 +46,14 @@ void bit_reversal_permutation(double complex *x, int N) {
   }
 }
 
-int main(int argc, char *argv[]){
-  if(argc != 2){
-    printf("Usage %s [filename]\n",argv[0]);
+int main(int argc, char *argv[]) {
+  if (argc != 2) {
+    printf("Usage %s [filename]\n", argv[0]);
     return EXIT_FAILURE;
   }
 
-  FILE* fp = fopen(argv[1], "r");
-  if(fp == NULL){
+  FILE *fp = fopen(argv[1], "r");
+  if (fp == NULL) {
     printf("Error opening file.");
     return EXIT_FAILURE;
   }
@@ -54,25 +61,21 @@ int main(int argc, char *argv[]){
   double complex x[MAX_SAMPLES];
   double temp_real, temp_imag;
   int N = 0;
-  while(fscanf(fp, "%lf,%lf", &temp_real, &temp_imag) > 0 
-        && N < MAX_SAMPLES) {
-        x[N++] = CMPLX(temp_real,temp_imag);
-    }
+  while (fscanf(fp, "%lf,%lf", &temp_real, &temp_imag) > 0 && N < MAX_SAMPLES) {
+    x[N++] = CMPLX(temp_real, temp_imag);
+  }
   fclose(fp);
 
   double complex X[N];
-  for(int j = 0; j < N; j++)
-  	X[j] = x[j];
-  bit_reversal_permutation(X,N);
+  for (int j = 0; j < N; j++) X[j] = x[j];
+  bit_reversal_permutation(X, N);
 
-  fft(X,N);
+  fft(X, N);
 
   printf("x:\n");
-  for(int j = 0; j < N; j++)
-    printf("%f%+fi\n",creal(x[j]),cimag(x[j]));
+  for (int j = 0; j < N; j++) printf("%f%+fi\n", creal(x[j]), cimag(x[j]));
   printf("X:\n");
-  for(int j = 0; j < N; j++)
-    printf("%f%+fi\n",creal(X[j]),cimag(X[j]));
+  for (int j = 0; j < N; j++) printf("%f%+fi\n", creal(X[j]), cimag(X[j]));
 
   return EXIT_SUCCESS;
 }

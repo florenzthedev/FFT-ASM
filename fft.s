@@ -1,3 +1,6 @@
+# Copyright (c) 2023 Zachary Todd Edwards
+# MIT License
+
 .data
 TAU:
   .double -6.28318530717958647692
@@ -11,11 +14,11 @@ temp:
   .double 0
 
 .text
-.global fft
+.global fft_asm
 # Arguments:
 #   rdi - pointer to start of double complex array with input values, will be overwritten with results
 #   rsi - the number of complex numbers in array pointed to by rdi
-fft:
+fft_asm:
   push  %r12
   push  %r13
   push  %r14
