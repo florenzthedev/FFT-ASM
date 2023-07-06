@@ -35,4 +35,5 @@ demo: $(EXEC)
 .PHONY: clean
 
 clean:
-	rm -f $(OBJDIR)/*.o core
+	rm -f $(OBJDIR)/*.o core $(EXEC)
+	$(MAKE) clean -C demo

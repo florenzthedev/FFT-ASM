@@ -33,4 +33,4 @@ $(OBJDIR):
 .PHONY: clean
 
 clean:
-	rm -f $(OBJDIR)/*.o core
+	rm -f $(OBJDIR)/*.o core $(EXEC)
