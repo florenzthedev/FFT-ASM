@@ -67,7 +67,7 @@ pair_loop:
   addq  %r14,           %r15
   shl   $1,             %r15
   movq  X(%rip),        %rdi
-  movsd (%rdi,%r15,8),  %xmm6 # real portion, the C99 standard does gaurentee this ordering
+  movsd (%rdi,%r15,8),  %xmm6 # real portion, the C99 standard does guarantee this ordering
   movsd 8(%rdi,%r15,8), %xmm7 # imaginary portion
 
   # Load next odd entry from array
