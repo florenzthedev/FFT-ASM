@@ -2,7 +2,7 @@
 #  MIT License
 
 CC = gcc
-CFLAGS = -Wall -I$(HEDDIR) -fcx-limited-range
+CFLAGS = -Wall -I$(HEDDIR) -fcx-limited-range -g
 
 SRCDIR = ./
 HEDDIR = ../
