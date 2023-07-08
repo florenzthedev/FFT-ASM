@@ -3,7 +3,7 @@
 
 #ifndef FFT_ASM_INCLUDED
 #define FFT_ASM_INCLUDED
-#include <assert.h>
+
 #include <complex.h>
 
 /**
@@ -12,21 +12,18 @@
  * bit-reversal-permutation order.
  *
  * @param X The input set, will be overwritten by results.
- * @param N The size of the input set, must be a power of two.
+ * @param N The size of the input set, must be a power of two greater than 0.
  */
 void fft_asm(double complex *X, long N);
 
 /**
- * @brief A small wrapper function for fft_asm that asserts that the input size
- * given is a power of two. This is a decimation-in-time implementation that
- * expects the input set to be in bit-reversal-permutation order.
+ * @brief Performs the Fourier transform. This interface is intended to be used
+ * with dynamic loading. This function handles putting the input into
+ * bit-reversal-permutation order.
  *
  * @param X The input set, will be overwritten by results.
- * @param N The size of the input set, must be a power of two.
+ * @param N The size of the input set, must be a power of two greater than 0.
  */
-void fft(double complex *X, long N) {
-  assert((N & (N - 1)) == 0);
-  fft_asm(X, N);
-}
+void fourier_transform(double complex *X, long N);
 
 #endif  // FFT_ASM_INCLUDED

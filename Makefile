@@ -2,22 +2,23 @@
 #  MIT License
 
 CC = gcc
-LD = gcc
+LD = ld
 CFLAGS = -Wall -I$(HEDDIR) -fPIC
-LFLAGS = -shared -Wl,-soname,$(EXEC) $(CFLAGS)
+LFLAGS = -shared -z noexecstack -soname $(EXEC) 
 
 HEDDIR = .
 ASMDIR = .
+SRCDIR = .
 OBJDIR = ./obj
 
-EXEC = libfft_asm.so
+EXEC = libfft_s.so
 
 LIBS = -lm -lc
 
-_DEPS = fft_asm.h
+_DEPS = fft_s.h
 DEPS = $(patsubst %,$(HEDDIR)/%,$(_DEPS))
 
-_OBJ = fft.o
+_OBJ = fft.o fft_s.o
 OBJ = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
 $(EXEC): $(OBJ)
@@ -26,14 +27,13 @@ $(EXEC): $(OBJ)
 $(OBJDIR)/%.o: $(ASMDIR)/%.s $(DEPS) | $(OBJDIR)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(DEPS) | $(OBJDIR)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
 $(OBJDIR):
 	mkdir -p $@
-
-demo: $(EXEC)
-	$(MAKE) -C demo
 
 .PHONY: clean
 
 clean:
 	rm -f $(OBJDIR)/*.o core $(EXEC)
-	$(MAKE) clean -C demo
