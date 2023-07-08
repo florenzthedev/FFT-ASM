@@ -1,8 +1,8 @@
 // Copyright (c) 2023 Zachary Todd Edwards
 // MIT License
 
-#ifndef FFT_ASM_INCLUDED
-#define FFT_ASM_INCLUDED
+#ifndef FFT_S_INCLUDED
+#define FFT_S_INCLUDED
 
 #include <complex.h>
 
@@ -28,4 +28,13 @@ void fft_asm(double complex *X, long N);
  */
 int fourier_transform(double complex *X, long N);
 
-#endif  // FFT_ASM_INCLUDED
+/**
+ * @brief Reorders the input dataset into bit-reversal-permutation for use with
+ * the FFT.
+ *
+ * @param x Input dataset.
+ * @param N Size of input dataset.
+ */
+void bit_reversal_permutation(double complex* x, int N);
+
+#endif  // FFT_S_INCLUDED
