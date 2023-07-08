@@ -23,7 +23,9 @@ void fft_asm(double complex *X, long N);
  *
  * @param X The input set, will be overwritten by results.
  * @param N The size of the input set, must be a power of two greater than 0.
+ *
+ * @return 0 on success, this implementation will never reasonably fail.
  */
-void fourier_transform(double complex *X, long N);
+int fourier_transform(double complex *X, long N);
 
 #endif  // FFT_ASM_INCLUDED
