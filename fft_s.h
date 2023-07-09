@@ -13,9 +13,9 @@
  *
  * @param X The input set, will be overwritten by results.
  * @param N The size of the input set, must be a power of two greater than 0.
- * @param aux Auxillary information, unused in this implementation.
+
  */
-void fft_asm(double complex *X, long N, int aux);
+void fft_asm(double complex *X, long N);
 
 /**
  * @brief Performs the Fourier transform. This interface is intended to be used
@@ -24,10 +24,11 @@ void fft_asm(double complex *X, long N, int aux);
  *
  * @param X The input set, will be overwritten by results.
  * @param N The size of the input set, must be a power of two greater than 0.
+ * @param aux Auxillary information, unused in this implementation.
  *
  * @return 0 on success, this implementation will never reasonably fail.
  */
-int fourier_transform(double complex *X, long N);
+int fourier_transform(double complex *X, long N, int aux);
 
 /**
  * @brief Reorders the input dataset into bit-reversal-permutation for use with
