@@ -2,7 +2,7 @@
 
 #include <assert.h>
 
-int fourier_transform(double complex* X, long N) {
+int fourier_transform(double complex* X, long N, int aux) {
   assert((N & (N - 1)) == 0);
   assert(N != 0);
   bit_reversal_permutation(X, N);
