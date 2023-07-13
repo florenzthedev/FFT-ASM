@@ -6,3 +6,5 @@ This implementation utilizes SSE2 to speed up complex numbers manipulation. Othe
 This implementation is thread-safe with respect to its own operation. Multiple instances of the FFT function can safely run concurrently on separate threads, provided each instance operates on a different dataset. However, it does not include any internal synchronization and does not support concurrent calls operating on the same data. 
 
 This implementation was written using AT&T syntax and is primarily intended to be compiled with `gcc`. A shared object library can be made by running `make` in the root project directory. This can then be linked against by adding the resulting `libfft_s.so` to your library search path and using the `-lfft_s` flag. Alternatively the source files can be integrated into a larger project directly or the library dynamically loaded.
+
+For tests and benchmarking please see the utility I made for that [here](https://github.com/florenzthedev/FourierTransformBenchmark).
